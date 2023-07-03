@@ -1,0 +1,23 @@
+.input {
+  outline: none;
+}
+
+.input :hover {
+  outline: none;
+}
+
+.table-row td {
+  border-bottom-width: 1px;
+}
+
+.table-row td:first-child {
+  border-left-width: 1px;
+}
+
+.table-row:hover {
+  background: rgba(242, 242, 242, 0.3) !important;
+}
+
+.table-row td:last-child {
+  border-right-width: 1px;
+}
