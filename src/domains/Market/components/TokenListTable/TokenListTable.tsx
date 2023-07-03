@@ -30,7 +30,16 @@ const TokenListTable = ({
         <tr className={styles['table-head']}>
           <th className="text-gray-400 pl-11 sm:text-black">CRYPTO</th>
           <th className="text-gray-400 sm:text-black">
-            <div className="sm:hidden">HARGA</div>
+            <div className="sm:hidden">
+              <div className="flex items-center gap-2">
+                <div>HARGA</div>
+
+                <div className="flex flex-col gap-0.5">
+                  <IconChevronUp />
+                  <IconChevronDown />
+                </div>
+              </div>
+            </div>
             <div className="md:hidden lg:hidden xl:hidden float-right">
               <Select
                 value={OPTIONS[0].label}
@@ -42,44 +51,40 @@ const TokenListTable = ({
           <th className="text-gray-400 text-center sm:hidden">
             <div className="flex items-center gap-2">
               <div>24 JAM</div>
-              <div>
-                <div className="flex flex-col gap-0.5">
-                  <IconChevronUp />
-                  <IconChevronDown />
-                </div>
+
+              <div className="flex flex-col gap-0.5">
+                <IconChevronUp />
+                <IconChevronDown />
               </div>
             </div>
           </th>
           <th className="text-gray-400 text-center sm:hidden">
             <div className="flex items-center gap-2">
               <div>1 MGG</div>
-              <div>
-                <div className="flex flex-col gap-0.5">
-                  <IconChevronUp />
-                  <IconChevronDown />
-                </div>
+
+              <div className="flex flex-col gap-0.5">
+                <IconChevronUp />
+                <IconChevronDown />
               </div>
             </div>
           </th>
           <th className="text-gray-400 text-center sm:hidden">
             <div className="flex items-center gap-2">
               <div>1 BLN</div>
-              <div>
-                <div className="flex flex-col gap-0.5">
-                  <IconChevronUp />
-                  <IconChevronDown />
-                </div>
+
+              <div className="flex flex-col gap-0.5">
+                <IconChevronUp />
+                <IconChevronDown />
               </div>
             </div>
           </th>
           <th className="text-gray-400 text-center sm:hidden">
             <div className="flex items-center gap-2">
               <div>1 THN</div>
-              <div>
-                <div className="flex flex-col gap-0.5">
-                  <IconChevronUp />
-                  <IconChevronDown />
-                </div>
+
+              <div className="flex flex-col gap-0.5">
+                <IconChevronUp />
+                <IconChevronDown />
               </div>
             </div>
           </th>
