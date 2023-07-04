@@ -4,7 +4,12 @@ import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 
 import { IconSearch } from '@components/icons'
-import { TokenIcon, TokenListTable, TokenListItem } from './components'
+import {
+  TokenIcon,
+  TokenListTable,
+  TokenListItem,
+  TokenName,
+} from './components'
 import styles from './_Market.module.css'
 
 import { PATHS } from '@constants/paths'
@@ -91,14 +96,10 @@ const MarketPage = () => {
                   <Link href={`${PATHS.MARKET}/${currency.currencySymbol}`}>
                     <div className="flex items-center">
                       <TokenIcon url={currency.logo} color={currency.color} />
-                      <div className="flex ml-6 flex-1 md:flex-col sm:flex-col">
-                        <div className="flex-1 font-semibold">
-                          {currency.name}
-                        </div>
-                        <div className="w-8 mx-6 text-gray-400 md:mx-0 sm:mx-0">
-                          {currency.currencySymbol}
-                        </div>
-                      </div>
+                      <TokenName
+                        name={currency.name}
+                        symbol={currency.currencySymbol}
+                      />
                     </div>
                   </Link>
                 </td>

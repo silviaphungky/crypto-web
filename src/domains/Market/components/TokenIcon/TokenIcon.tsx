@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { TokenIconApi } from '@services/token-icon-api'
 
 import styles from './_TokenIcon.module.css'
+import { memo } from 'react'
 
 const TokenIcon = ({ url, color }: { url: string; color: string }) => {
   const { data, isLoading } = useQuery({
@@ -26,4 +27,4 @@ const TokenIcon = ({ url, color }: { url: string; color: string }) => {
   )
 }
 
-export default TokenIcon
+export default memo(TokenIcon)
