@@ -1,20 +1,31 @@
 import { TradeApi } from '@services/trade-api'
 import { useQuery } from '@tanstack/react-query'
 import arrayToObject from '@utils/arrayToObject'
-import TokenIcon from '../TokenIcon/TokenIcon'
-import styles from './_TokenListItem.module.css'
-import Link from 'next/link'
 import { SupportedChangesResponse } from 'src/pages/api/supported-changes'
-import { useEffect, useMemo, useRef } from 'react'
+import { Dispatch, useEffect, useRef } from 'react'
 import { DateRange } from '../TokenListTable/TokenListTable'
+import { PriceChangeResponse } from 'src/pages/api/price-changes'
+import SortMiddleware from './SortMiddleware'
 
-const TokenListItem = ({
-  dateRange,
-  currency,
-}: {
+interface Props {
+  i: number
   dateRange: DateRange
   currency: SupportedChangesResponse
-}) => {
+  sortBy: string
+  sortDir?: 'asc' | 'desc'
+  tokens: Array<SupportedChangesResponse>
+  setTokenList: Dispatch<Array<SupportedChangesResponse>>
+}
+
+const TokenListItem = ({
+  i,
+  tokens,
+  dateRange,
+  currency,
+  sortBy,
+  sortDir,
+  setTokenList,
+}: Props) => {
   const priceRef = useRef()
 
   const { data, isLoading, error } = useQuery({
@@ -38,7 +49,9 @@ const TokenListItem = ({
   const currencySymbol = currency.currencySymbol
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const pricesChanges = !isLoading ? data.payload : []
+  const pricesChanges = (
+    !isLoading ? data.payload : []
+  ) as PriceChangeResponse[]
 
   const pricesChangesObject =
     arrayToObject(pricesChanges, (item) => item.pair.split('/idr')[0]) || {}
@@ -57,6 +70,15 @@ const TokenListItem = ({
 
   return (
     <>
+      {sortDir && i === 2 ? (
+        <SortMiddleware
+          tokens={tokens}
+          sortDir={sortDir}
+          sortBy={sortBy}
+          pricesChanges={pricesChanges}
+          setTokenList={setTokenList}
+        />
+      ) : null}
       <td>
         <div
           className={`font-semibold ${textColor(
@@ -70,30 +92,30 @@ const TokenListItem = ({
 
         <div
           className={`md:hidden lg:hidden xl:hidden font-semibold text-right text-md ${textColor(
-            price.day || 0
+            price.day || '0'
           )}`}
         >{`${price[dateRange] || 0}%`}</div>
       </td>
       <td className="sm:hidden">
         <div
           className={`font-semibold text-center text-md ${textColor(
-            price.day || 0
+            price.day || '0'
           )}`}
         >{`${price.day || 0}%`}</div>
       </td>
       <td
         className={`font-semibold text-center ${textColor(
-          price.week || 0
+          price.week || '0'
         )} sm:hidden`}
       >{`${price.week || 0}%`}</td>
       <td
         className={`font-semibold text-center ${textColor(
-          price.month || 0
+          price.month || '0'
         )} sm:hidden`}
       >{`${price.month || 0}%`}</td>
       <td
         className={`font-semibold text-center ${textColor(
-          price.year || 0
+          price.year || '0'
         )} sm:hidden`}
       >{`${price.year || 0}%`}</td>
     </>

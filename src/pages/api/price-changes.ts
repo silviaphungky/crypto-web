@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
-interface Payload {
+export interface PriceChangeResponse {
   day: string
   latestPrice: string
   month: string
@@ -14,7 +14,7 @@ export default async function handler(
   res: NextApiResponse<{
     code?: string
     message: string
-    payload?: Array<Payload>
+    payload?: Array<PriceChangeResponse>
   }>
 ) {
   try {

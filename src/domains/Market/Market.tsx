@@ -13,8 +13,16 @@ import { WalletApi } from '@services/wallet-api'
 import { SupportedChangesResponse } from 'src/pages/api/supported-changes'
 
 import { DateRange } from './components/TokenListTable/TokenListTable'
+import { useEffect, useMemo, useState } from 'react'
 
 const MarketPage = () => {
+  const [tokenList, setTokenList] = useState<Array<SupportedChangesResponse>>(
+    []
+  )
+  const [sortBy, setSortBy] = useState('')
+  const [sortDir, setSortDir] = useState<'asc' | 'desc' | undefined>(undefined)
+  const [sortKey, setSortKey] = useState<Array<string>>([])
+
   const {
     data: supportedCurrencies,
     isLoading: isLoadingSupportedCurrencies,
@@ -24,12 +32,27 @@ const MarketPage = () => {
     queryFn: WalletApi.getSupportedChanges,
   })
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const tokens = (supportedCurrencies?.payload ||
+    []) as Array<SupportedChangesResponse>
+
+  useEffect(() => {
+    if (!sortDir) {
+      setTokenList(tokens)
+    }
+  }, [sortDir, tokens])
+
   if (isLoadingSupportedCurrencies) {
     return <div>Loading</div>
   }
 
-  const tokens = (supportedCurrencies.payload ||
-    []) as Array<SupportedChangesResponse>
+  // const data = sortDir ? tokenList : tokens
+  // console.log(
+  //   'rerender',
+  //   sortDir,
+  //   tokens[0].currencySymbol,
+  //   data[0].currencySymbol
+  // )
 
   return (
     <>
@@ -45,10 +68,20 @@ const MarketPage = () => {
           />
         </div>
       </div>
-      <TokenListTable>
+      <TokenListTable
+        sortBy={sortBy}
+        sortDir={sortDir}
+        setSortBy={setSortBy}
+        setSortDir={setSortDir}
+      >
         {({ dateRange }) =>
-          tokens.map((currency) => {
-            if (currency.currencyGroup === 'IDR') return
+          tokenList.map((currency, i) => {
+            let adjustedIndex = i
+            if (currency.currencyGroup === 'IDR') {
+              adjustedIndex--
+              return
+            }
+
             return (
               <tr
                 key={`token-${currency.currencySymbol}`}
@@ -70,8 +103,13 @@ const MarketPage = () => {
                   </Link>
                 </td>
                 <TokenListItem
+                  i={adjustedIndex}
+                  tokens={tokens}
                   dateRange={dateRange as DateRange}
                   currency={currency}
+                  sortBy={sortBy}
+                  sortDir={sortDir}
+                  setTokenList={setTokenList}
                 />
               </tr>
             )
