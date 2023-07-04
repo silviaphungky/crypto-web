@@ -45,11 +45,9 @@ const SortMiddleware = ({
         const orderMap = new Map(order.map((value, index) => [value, index]))
 
         arr.sort((a, b) => {
-          const aIndex = orderMap.get(a.currencySymbol.toLowerCase())
-          const bIndex = orderMap.get(b.currencySymbol.toLowerCase())
-          return (
-            (aIndex === undefined) - (bIndex === undefined) || aIndex - bIndex
-          )
+          const aIndex = orderMap.get(a.currencySymbol.toLowerCase()) || 0
+          const bIndex = orderMap.get(b.currencySymbol.toLowerCase()) || 0
+          return aIndex - bIndex
         })
 
         return arr
