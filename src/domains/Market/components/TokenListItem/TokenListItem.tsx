@@ -31,7 +31,7 @@ const TokenListItem = ({
   const { data, isLoading, error } = useQuery({
     queryKey: ['tokens'],
     queryFn: TradeApi.getPriceChanges,
-    refetchInterval: 1000,
+    // refetchInterval: 1000,
   })
 
   useEffect(() => {

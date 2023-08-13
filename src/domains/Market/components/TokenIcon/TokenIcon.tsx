@@ -15,6 +15,8 @@ const TokenIcon = ({ url, color }: { url: string; color: string }) => {
     return <div className={styles.icon} style={{ color }} />
   }
 
+  // console.log('dataaaaa', JSON.parse(data))
+
   return data ? (
     <div
       className={styles.icon}

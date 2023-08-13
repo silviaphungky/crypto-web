@@ -95,6 +95,7 @@ const MarketPage = () => {
                 <td>
                   <Link href={`${PATHS.MARKET}/${currency.currencySymbol}`}>
                     <div className="flex items-center">
+                      {/* {console.log(currency)} */}
                       <TokenIcon url={currency.logo} color={currency.color} />
                       <TokenName
                         name={currency.name}
