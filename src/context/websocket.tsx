@@ -1,5 +1,3 @@
-import { getCookiesData } from '@utils/cookies'
-import { useRouter } from 'next/router'
 import {
   createContext,
   useContext,
@@ -9,8 +7,6 @@ import {
   useState,
   useRef,
 } from 'react'
-import { PATHS } from '@constants/paths'
-import getConfig from 'next/config'
 
 const WebsocketStore = createContext<{
   ready: boolean
@@ -32,30 +28,22 @@ export enum WebSocketReadyState {
 }
 
 export const WebsocketProvider: FC<WebsocketProps> = ({ children }) => {
-  const router = useRouter()
-
-  const asd = '?streams=btcusdt@depth'
-
   const [isReady, setIsReady] = useState(false)
   const [socket, setSocket] = useState<WebSocket | undefined>(undefined)
 
   const socketRef = useRef<WebSocket | undefined>(undefined)
 
-  const wsUrl = 'wss://stream.binance.com/stream?streams=btcusdt@depth'
+  const wsUrl = 'wss://stream-cloud.binanceru.net/stream'
 
   useEffect(() => {
     const ws: WebSocket = new WebSocket(wsUrl)
     socketRef.current = ws
 
     ws.addEventListener('open', async function () {
-      console.log('open')
       setIsReady(true)
       setSocket(ws)
     })
 
-    ws.addEventListener('message', async function (event) {
-      console.log('message binance', JSON.parse(event.data).data.a.length)
-    })
     ws.onclose = () => setIsReady(false)
     ws.onerror = (error) => {
       console.log('ws', error)
