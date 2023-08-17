@@ -1,0 +1,16 @@
+.running-trade__container {
+  width: max-content;
+  padding: 0 0.75rem;
+  margin: auto;
+}
+
+.running-trade__list {
+  max-height: 18rem;
+  overflow: auto;
+  width: max-content;
+  margin: auto;
+}
+
+.running-trade__list > div:nth-child(2n) {
+  background: #f2f2f2;
+}
