@@ -22,7 +22,7 @@ export default async function handler(
     const data = await response.json()
     res.status(200).json(data)
   } catch (error) {
-    console.error(error)
+    console.error(error.response)
     res.status(500).json({ message: 'Error fetching data' })
   }
 }
