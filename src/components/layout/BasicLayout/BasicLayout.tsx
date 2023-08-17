@@ -6,7 +6,7 @@ interface Props {
 
 const BasicLayout = ({ children }: Props) => {
   return (
-    <div className="mx-auto max-w-7xl sm:max-w-none md:max-w-none">
+    <div className="mx-auto max-w-5xl sm:max-w-none md:max-w-none">
       {children}
     </div>
   )

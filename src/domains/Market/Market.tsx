@@ -1,6 +1,3 @@
-'use client'
-
-import Link from 'next/link'
 import { useQuery } from '@tanstack/react-query'
 
 import { IconSearch } from '@components/icons'
@@ -19,14 +16,45 @@ import { SupportedChangesResponse } from 'src/pages/api/supported-changes'
 
 import { DateRange } from './components/TokenListTable/TokenListTable'
 import { useEffect, useMemo, useState } from 'react'
+import { Shimmer } from '@components'
+import { useRouter } from 'next/router'
+import { TokenIconApi } from '@services/token-icon-api'
+import arrayToObject from '@utils/arrayToObject'
+
+const initToken = {
+  color: '',
+  currencyGroup: '',
+  currencySymbol: '',
+  decimal_point: 0,
+  listingDate: '',
+  logo: '',
+  name: '',
+  wallets: [
+    {
+      blockchain: '',
+      blockchainName: '',
+      currencyGroup: '',
+      decimal_point: 0,
+      explorer: '',
+      listingDate: '',
+      logo: '',
+      tokenSymbol: '',
+      tokenType: '',
+    },
+  ],
+}
 
 const MarketPage = () => {
-  const [tokenList, setTokenList] = useState<Array<SupportedChangesResponse>>(
-    []
-  )
+  const router = useRouter()
+  const [tokenList, setTokenList] = useState<Array<SupportedChangesResponse>>([
+    initToken,
+    initToken,
+    initToken,
+    initToken,
+    initToken,
+  ])
   const [sortBy, setSortBy] = useState('')
   const [sortDir, setSortDir] = useState<'asc' | 'desc' | undefined>(undefined)
-  const [sortKey, setSortKey] = useState<Array<string>>([])
 
   const {
     data: supportedCurrencies,
@@ -37,9 +65,17 @@ const MarketPage = () => {
     queryFn: WalletApi.getSupportedChanges,
   })
 
+  const { data } = useQuery({
+    queryKey: ['icons'],
+    queryFn: TokenIconApi.getAllIcon,
+  })
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const tokens = (supportedCurrencies?.payload ||
-    []) as Array<SupportedChangesResponse>
+  const tokens = useMemo(
+    () =>
+      (supportedCurrencies?.payload || []) as Array<SupportedChangesResponse>,
+    [supportedCurrencies?.payload]
+  )
 
   useEffect(() => {
     if (!sortDir) {
@@ -47,17 +83,11 @@ const MarketPage = () => {
     }
   }, [sortDir, tokens])
 
-  if (isLoadingSupportedCurrencies) {
-    return <div>Loading</div>
+  const handleRedirectToDetail = (path: string) => {
+    router.push(path)
   }
 
-  // const data = sortDir ? tokenList : tokens
-  // console.log(
-  //   'rerender',
-  //   sortDir,
-  //   tokens[0].currencySymbol,
-  //   data[0].currencySymbol
-  // )
+  const iconObj = arrayToObject(data?.data, (item) => item.assetCode)
 
   return (
     <>
@@ -89,19 +119,29 @@ const MarketPage = () => {
 
             return (
               <tr
-                key={`token-${currency.currencySymbol}`}
-                className={styles['table-row']}
+                key={`token-${currency.currencySymbol}-${i}`}
+                className={`${styles['table-row']} cursor-pointer`}
+                onClick={() =>
+                  handleRedirectToDetail(
+                    `${PATHS.MARKET}/${currency.currencySymbol}`
+                  )
+                }
               >
                 <td>
-                  <Link href={`${PATHS.MARKET}/${currency.currencySymbol}`}>
+                  {isLoadingSupportedCurrencies ? (
+                    <Shimmer />
+                  ) : (
                     <div className="flex items-center">
-                      <TokenIcon url={currency.logo} color={currency.color} />
+                      <TokenIcon
+                        url={iconObj[currency.currencySymbol]?.logoUrl}
+                        alt={`icon ${[currency.currencySymbol]}`}
+                      />
                       <TokenName
                         name={currency.name}
                         symbol={currency.currencySymbol}
                       />
                     </div>
-                  </Link>
+                  )}
                 </td>
                 <TokenListItem
                   i={adjustedIndex}
@@ -110,6 +150,7 @@ const MarketPage = () => {
                   currency={currency}
                   sortBy={sortBy}
                   sortDir={sortDir}
+                  isLoadingSupportedCurrencies={isLoadingSupportedCurrencies}
                   setTokenList={setTokenList}
                 />
               </tr>

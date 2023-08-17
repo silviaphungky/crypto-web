@@ -1,10 +1,8 @@
 export const TokenIconApi = {
-  get: async (url: string) => {
-    const response = await fetch('/api/icon', {
-      method: 'POST',
-      body: JSON.stringify({ url }),
-    })
-    const icon = await response.text()
-    return icon
+  getAllIcon: async () => {
+    const response = await fetch('/api/icon')
+    const data = await response.json()
+
+    return data
   },
 }
