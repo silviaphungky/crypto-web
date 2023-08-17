@@ -1,3 +1,3 @@
 import dynamic from 'next/dynamic'
 
-const RunningTrade = dynamic(() => import('./RunningTrade'))
+export const RunningTrade = dynamic(() => import('./RunningTrade'))
