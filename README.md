@@ -12,7 +12,7 @@ yarn dev
 pnpm dev
 ```
 
-Live: https://crypto-web-lilac.vercel.app/market
+Live: [https://crypto-web-lilac.vercel.app/market](https://crypto-bcn2t37do-silviaphungky1.vercel.app/market)
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
