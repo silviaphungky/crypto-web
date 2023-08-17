@@ -128,20 +128,16 @@ const MarketPage = () => {
                 }
               >
                 <td>
-                  {isLoadingSupportedCurrencies ? (
-                    <Shimmer />
-                  ) : (
-                    <div className="flex items-center">
-                      <TokenIcon
-                        url={iconObj[currency.currencySymbol]?.logoUrl}
-                        alt={`icon ${[currency.currencySymbol]}`}
-                      />
-                      <TokenName
-                        name={currency.name}
-                        symbol={currency.currencySymbol}
-                      />
-                    </div>
-                  )}
+                  <div className="flex items-center">
+                    <TokenIcon
+                      url={iconObj[currency.currencySymbol]?.logoUrl}
+                      alt={`icon ${[currency.currencySymbol]}`}
+                    />
+                    <TokenName
+                      name={currency.name}
+                      symbol={currency.currencySymbol}
+                    />
+                  </div>
                 </td>
                 <TokenListItem
                   i={adjustedIndex}
