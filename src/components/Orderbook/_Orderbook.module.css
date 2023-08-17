@@ -1,0 +1,15 @@
+.orderbook__table {
+  width: 100%;
+}
+
+.orderbook__table td {
+  padding: 0.5rem 1rem;
+}
+
+.orderbook__thead tr {
+  background-color: #ececec;
+}
+
+.orderbook__thead th {
+  padding: 0.5rem 1rem;
+}
