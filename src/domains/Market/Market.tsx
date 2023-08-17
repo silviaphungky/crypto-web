@@ -65,11 +65,6 @@ const MarketPage = () => {
     queryFn: WalletApi.getSupportedChanges,
   })
 
-  const { data } = useQuery({
-    queryKey: ['icons'],
-    queryFn: TokenIconApi.getAllIcon,
-  })
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const tokens = useMemo(
     () =>
@@ -86,8 +81,6 @@ const MarketPage = () => {
   const handleRedirectToDetail = (path: string) => {
     router.push(path)
   }
-
-  const iconObj = arrayToObject(data?.data, (item) => item.assetCode)
 
   return (
     <>
@@ -129,14 +122,15 @@ const MarketPage = () => {
               >
                 <td>
                   <div className="flex items-center">
-                    <TokenIcon
-                      url={iconObj[currency.currencySymbol]?.logoUrl}
-                      alt={`icon ${[currency.currencySymbol]}`}
-                    />
-                    <TokenName
-                      name={currency.name}
-                      symbol={currency.currencySymbol}
-                    />
+                    <TokenIcon url={currency.logo} color={currency.color} />
+                    {isLoadingSupportedCurrencies ? (
+                      <Shimmer />
+                    ) : (
+                      <TokenName
+                        name={currency.name}
+                        symbol={currency.currencySymbol}
+                      />
+                    )}
                   </div>
                 </td>
                 <TokenListItem
