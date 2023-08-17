@@ -12,6 +12,8 @@ yarn dev
 pnpm dev
 ```
 
+Live: https://crypto-web-lilac.vercel.app/market
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Website Profiling compare to the original website:
