@@ -1,11 +1,12 @@
 import { BasicLayout } from '@components/layout'
+import { WebsocketProvider } from '@context/websocket'
 import CryptoDetailPage from '@domains/CryptoDetail/CryptpDetail'
 import MarketPage from '@domains/Market'
 import Head from 'next/head'
 
 const CryptoDetail = () => {
   return (
-    <>
+    <WebsocketProvider>
       <Head>
         <meta name="description" content="MOST - Mandiri Sekuritas" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -33,7 +34,7 @@ const CryptoDetail = () => {
         ></meta>
       </Head>
       <CryptoDetailPage />
-    </>
+    </WebsocketProvider>
   )
 }
 

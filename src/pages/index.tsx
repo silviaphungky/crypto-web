@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { PATHS } from '@constants/paths'
+import { Shimmer } from '@components'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +17,7 @@ export default function Home() {
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
     >
-      <div>Loading</div>
+      <Shimmer />
     </main>
   )
 }

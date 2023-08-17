@@ -15,9 +15,13 @@ module.exports = {
         bullish: '#25a764',
         bearish: '#e54040',
         'gray-400': '#929396',
+        yellowPrimary: '#FFC327',
+        'yellow-200': 'rgba(255, 195, 39, 0.20)',
+        'gray-300': '#ececec',
       },
       backgroundColor: {
         'gray-200': '#f2f2f2',
+        'gray-300': '#ececec',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
