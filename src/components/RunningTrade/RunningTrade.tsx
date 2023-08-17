@@ -74,9 +74,9 @@ const RunningTrade = ({ currency }: Props) => {
   return (
     <div className={`${styles['running-trade__container']}`}>
       <div className={`flex gap-5`}>
-        <div className="w-24 font-semibold py-1 px-2">Time</div>
-        <div className="w-24 font-semibold py-1 px-2">USDT</div>
-        <div className="uppercase w-24 font-semibold py-1 px-2">{symbol}</div>
+        <div className="w-24 font-bold py-1 px-2">Time</div>
+        <div className="w-24 font-bold py-1 px-2">USDT</div>
+        <div className="uppercase w-24 font-bold py-1 px-2">{symbol}</div>
       </div>
 
       <div className={`${styles['running-trade__list']}`}>

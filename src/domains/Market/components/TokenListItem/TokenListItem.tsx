@@ -87,7 +87,6 @@ const TokenListItem = ({
           <Shimmer />
         ) : (
           <>
-            {' '}
             <div
               className={`font-semibold ${textColor(
                 deltaLatestPrice

@@ -43,11 +43,11 @@ const CryptoDetailPage = () => {
   }, [ready, socket])
 
   return (
-    <>
+    <div className="sm:px-2">
       <CryptoDetailHeader />
       <CandleStick />
       <CryptoDetailTabs currency={currency} />
-    </>
+    </div>
   )
 }
 

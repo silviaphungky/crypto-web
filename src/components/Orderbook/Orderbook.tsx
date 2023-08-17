@@ -93,7 +93,7 @@ const Orderbook = () => {
     .filter((el) => !!Number(el.vol))
 
   return (
-    <div className="sm: px-2">
+    <div>
       <div className="flex items-start gap-6 sm:gap-0">
         <table className={`${styles['orderbook__table']} table-fixed`}>
           <thead className={`${styles.orderbook__thead}`}>

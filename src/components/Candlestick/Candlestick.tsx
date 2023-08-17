@@ -12,7 +12,7 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const id = 2
 
-const intervals = ['15m', '1h', '4h', '1d', '1w', '1M']
+const intervals = ['4h', '1d', '1w', '1M']
 
 const CandleStick = () => {
   const router = useRouter()
