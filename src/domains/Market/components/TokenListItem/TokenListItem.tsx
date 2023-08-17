@@ -6,6 +6,7 @@ import { Dispatch, useEffect, useRef } from 'react'
 import { DateRange } from '../TokenListTable/TokenListTable'
 import { PriceChangeResponse } from 'src/pages/api/price-changes'
 import SortMiddleware from './SortMiddleware'
+import { Shimmer } from '@components'
 
 interface Props {
   i: number
@@ -14,6 +15,7 @@ interface Props {
   sortBy: string
   sortDir?: 'asc' | 'desc'
   tokens: Array<SupportedChangesResponse>
+  isLoadingSupportedCurrencies: boolean
   setTokenList: Dispatch<Array<SupportedChangesResponse>>
 }
 
@@ -24,14 +26,15 @@ const TokenListItem = ({
   currency,
   sortBy,
   sortDir,
+  isLoadingSupportedCurrencies,
   setTokenList,
 }: Props) => {
   const priceRef = useRef()
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['tokens'],
     queryFn: TradeApi.getPriceChanges,
-    // refetchInterval: 1000,
+    refetchInterval: 1000,
   })
 
   useEffect(() => {
@@ -80,44 +83,64 @@ const TokenListItem = ({
         />
       ) : null}
       <td>
-        <div
-          className={`font-semibold ${textColor(
-            deltaLatestPrice
-          )} sm:text-right`}
-        >{`${new Intl.NumberFormat('id-ID', {
-          style: 'currency',
-          currency: 'IDR',
-          maximumFractionDigits: 0,
-        }).format(Number(price.latestPrice || 0))}`}</div>
-
-        <div
-          className={`md:hidden lg:hidden xl:hidden font-semibold text-right text-md ${textColor(
-            price.day || '0'
-          )}`}
-        >{`${price[dateRange] || 0}%`}</div>
+        {isLoadingSupportedCurrencies ? (
+          <Shimmer />
+        ) : (
+          <>
+            {' '}
+            <div
+              className={`font-semibold ${textColor(
+                deltaLatestPrice
+              )} sm:text-right`}
+            >{`${new Intl.NumberFormat('id-ID', {
+              style: 'currency',
+              currency: 'IDR',
+              maximumFractionDigits: 0,
+            }).format(Number(price.latestPrice || 0))}`}</div>
+            <div
+              className={`md:hidden lg:hidden xl:hidden font-semibold text-right text-md ${textColor(
+                price.day || '0'
+              )}`}
+            >
+              {`${price[dateRange] || 0}%`}
+            </div>
+          </>
+        )}
       </td>
       <td className="sm:hidden">
-        <div
-          className={`font-semibold text-center text-md ${textColor(
-            price.day || '0'
-          )}`}
-        >{`${price.day || 0}%`}</div>
+        {isLoadingSupportedCurrencies ? (
+          <Shimmer />
+        ) : (
+          <div
+            className={`font-semibold text-center text-md ${textColor(
+              price.day || '0'
+            )}`}
+          >
+            {`${price.day || 0}%`}
+          </div>
+        )}
       </td>
       <td
         className={`font-semibold text-center ${textColor(
           price.week || '0'
         )} sm:hidden`}
-      >{`${price.week || 0}%`}</td>
+      >
+        {isLoadingSupportedCurrencies ? <Shimmer /> : `${price.week || 0}%`}
+      </td>
       <td
         className={`font-semibold text-center ${textColor(
           price.month || '0'
         )} sm:hidden`}
-      >{`${price.month || 0}%`}</td>
+      >
+        {isLoadingSupportedCurrencies ? <Shimmer /> : `${price.month || 0}%`}
+      </td>
       <td
         className={`font-semibold text-center ${textColor(
           price.year || '0'
         )} sm:hidden`}
-      >{`${price.year || 0}%`}</td>
+      >
+        {isLoadingSupportedCurrencies ? <Shimmer /> : `${price.year || 0}%`}
+      </td>
     </>
   )
 }

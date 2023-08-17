@@ -1,31 +1,13 @@
-import { useQuery } from '@tanstack/react-query'
-
-import { TokenIconApi } from '@services/token-icon-api'
-
 import styles from './_TokenIcon.module.css'
 import { memo } from 'react'
+import Image from 'next/image'
+import { Shimmer } from '@components'
 
-const TokenIcon = ({ url, color }: { url: string; color: string }) => {
-  const { data, isLoading } = useQuery({
-    queryKey: ['icon', url],
-    queryFn: () => TokenIconApi.get(url),
-  })
-
-  if (isLoading) {
-    return <div className={styles.icon} style={{ color }} />
-  }
-
-  // console.log('dataaaaa', JSON.parse(data))
-
-  return data ? (
-    <div
-      className={styles.icon}
-      style={{ color }}
-      data-src={url}
-      dangerouslySetInnerHTML={{ __html: JSON.parse(data) }}
-    />
+const TokenIcon = ({ url, alt }: { url: string; alt: string }) => {
+  return url ? (
+    <Image className={styles.icon} src={url} alt={alt} width={35} height={35} />
   ) : (
-    <img alt="" src="" />
+    <Shimmer />
   )
 }
 
